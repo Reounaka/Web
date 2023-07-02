@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shopping Cart Example</title>
+  <style>
+    /* CSS styles for the shopping cart */
+    .cart {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .cart-item span {
+      margin-right: 10px;
+    }
+  </style>
+  <script>
+    // JavaScript logic for the shopping cart
+    document.addEventListener('DOMContentLoaded', function() {
+      // Store the cart items in an array
+      var cartItems = [];
+
+      // Function to add an item to the cart
+      function addToCart(item) {
+        cartItems.push(item);
+        renderCart();
+      }
+
+      // Function to remove an item from the cart
+      function removeFromCart(index) {
+        cartItems.splice(index, 1);
+        renderCart();
+      }
+
+      // Function to render the cart items on the page
+      function renderCart() {
+        var cartContainer = document.getElementById('cart-items');
+        cartContainer.innerHTML = '';
+
+        for (var i = 0; i < cartItems.length; i++) {
+          var item = cartItems[i];
+          var cartItemElement = document.createElement('div');
+          cartItemElement.classList.add('cart-item');
+
+          var nameElement = document.createElement('span');
+          nameElement.textContent = item.name;
+
+          var priceElement = document.createElement('span');
+          priceElement.textContent = '$' + item.price;
+
+          var removeButton = document.createElement('button');
+          removeButton.textContent = 'Remove';
+          removeButton.dataset.index = i;
+          removeButton.addEventListener('click', function(e) {
+            var index = e.target.dataset.index;
+            removeFromCart(index);
+          });
+
+          cartItemElement.appendChild(nameElement);
+          cartItemElement.appendChild(priceElement);
+          cartItemElement.appendChild(removeButton);
+
+          cartContainer.appendChild(cartItemElement);
+        }
+      }
+
+      // Example usage: Adding items to the cart
+      addToCart({ name: 'Product 1', price: 10 });
+      addToCart({ name: 'Product 2', price: 20 });
+    });
+  </script>
+</head>
+<body>
+  <h1>Shopping Cart Example</h1>
+
+  <div class="cart">
+    <h2>Cart Items</h2>
+    <div id="cart-items"></div>
+  </div>
+
+  <div class="products">
+    <h2>Products</h2>
+    <!-- Example product buttons -->
+    <button onclick="addToCart({ name: 'Product 3', price: 15 })">Add Product 3</button>
+    <button onclick="addToCart({ name: 'Product 4', price: 25 })">Add Product 4</button>
+  </div>
+</body>
+</html>
